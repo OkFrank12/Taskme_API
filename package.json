@@ -1,0 +1,26 @@
+{
+  "name": "taskme",
+  "version": "1.0.0",
+  "description": "Building the Task Application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "Authentication",
+    "Authorization",
+    "CRUD",
+    "Operations"
+  ],
+  "author": "Franklin Okoro",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "mongoose": "^8.5.2",
+    "morgan": "^1.10.0"
+  }
+}
