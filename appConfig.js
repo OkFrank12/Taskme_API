@@ -1,11 +1,18 @@
 import cors from "cors";
+import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
+import authRouter from "./router/authRouter.js";
+import "ejs";
 
 export const appConfig = (app) => {
   app.use(cors());
+  app.use(express.json());
   app.use(morgan("dev"));
   app.use(helmet());
+  app.set("view engine", "ejs");
+
+  app.use("/api", authRouter);
 
   app.get("/", (req, res) => {
     try {

@@ -1,0 +1,45 @@
+import { createTransport } from "nodemailer";
+import { envConfig } from "../config/envConfig.js";
+import jwt from "jsonwebtoken";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import { renderFile } from "ejs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export const sendVerificationMail = async (user) => {
+  try {
+    const transport = createTransport({
+      service: "gmail",
+      auth: {
+        user: "cfoonyemmemme@gmail.com",
+        pass: envConfig.PASS,
+      },
+    });
+
+    const token = jwt.sign({ id: user._id }, envConfig.TOKEN);
+
+    console.log(token);
+
+    const dataForEjs = {
+      username: user.username,
+      email: user.email,
+      url: `http://localhost:1234/api/${token}/verify-user`,
+    };
+
+    const locateEjsFile = join(__dirname, "../views/verifyMail.ejs");
+    const renderEjsFile = await renderFile(locateEjsFile, dataForEjs);
+
+    const mailer = {
+      from: "Taskme Mail <cfoonyemmemme@gmail.com>",
+      to: user.email,
+      subject: "Registeration Success -- Please verify account",
+      html: renderEjsFile,
+    };
+
+    transport.sendMail(mailer);
+  } catch (error) {
+    throw error;
+  }
+};

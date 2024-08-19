@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import mongoose from "mongoose";
 
-const authModel = new Schema(
+const authModel = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -28,4 +28,4 @@ const authModel = new Schema(
   { timestamps: true }
 );
 
-export default new model("auths", authModel);
+export default mongoose.model("auths", authModel);
