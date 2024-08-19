@@ -64,3 +64,36 @@ export const verifyAuth = async (req, res) => {
     });
   }
 };
+
+// View All Users
+export const viewAllUsers = async (req, res) => {
+  try {
+    const auth = await authModel.find();
+
+    return res.status(200).json({
+      message: "All Users on Taskme Application",
+      data: auth,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+// View One User
+export const viewOneUser = async (req, res) => {
+  try {
+    const { authID } = req.params;
+    const auth = await authModel.findById(authID);
+
+    return res.status(200).json({
+      message: `${auth.username}'s record`,
+      data: auth,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
