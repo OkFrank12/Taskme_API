@@ -4,6 +4,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import authRouter from "./router/authRouter.js";
 import "ejs";
+import taskRouter from "./router/taskRouter.js";
 
 export const appConfig = (app) => {
   app.use(cors());
@@ -13,7 +14,8 @@ export const appConfig = (app) => {
   app.set("view engine", "ejs");
 
   app.use("/api", authRouter);
-
+  app.use("/api/task", taskRouter);
+  // http://localhost:1234/api/task/:id/create-task
   app.get("/", (req, res) => {
     try {
       return res.status(200).json({

@@ -43,3 +43,35 @@ export const sendVerificationMail = async (user) => {
     throw error;
   }
 };
+
+export const resetPasswordMail = async (user, token) => {
+  try {
+    const transport = createTransport({
+      service: "gmail",
+      auth: {
+        user: "cfoonyemmemme@gmail.com",
+        pass: envConfig.PASS,
+      },
+    });
+
+    const passedData = {
+      username: user.username,
+      email: user.email,
+      url: `http://localhost:1234/api/${token}/change-user-password`,
+    };
+
+    const locateEjsFile = join(__dirname, "../views/resetMail.ejs");
+    const readFile = await renderFile(locateEjsFile, passedData);
+
+    const mailer = {
+      from: "Reset Password <cfoonyemmemme@gmail.com>",
+      to: user.email,
+      subject: "Reset Your Password",
+      html: readFile,
+    };
+
+    transport.sendMail(mailer);
+  } catch (error) {
+    throw error;
+  }
+};

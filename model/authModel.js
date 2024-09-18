@@ -24,6 +24,24 @@ const authModel = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    taskHistory: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "todos",
+      },
+    ],
+    pendingHistory: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "todos",
+      },
+    ],
+    doneHistory: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "todos",
+      },
+    ],
   },
   { timestamps: true }
 );
